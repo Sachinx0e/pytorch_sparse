@@ -62,13 +62,13 @@ def get_extensions():
             define_macros += [('WITH_CUDA', None)]
             nvcc_flags = os.getenv('NVCC_FLAGS', '')
             nvcc_flags = [] if nvcc_flags == '' else nvcc_flags.split(' ')
-            nvcc_flags += ['-arch=sm_35', '--expt-relaxed-constexpr', '-O2']
+            nvcc_flags += ['-O2',"-I/opt/rocm/include/rocrand","-I/opt/rocm/include/hiprand"]
             extra_compile_args['nvcc'] = nvcc_flags
 
             if sys.platform == 'win32':
                 extra_link_args += ['cusparse.lib']
             else:
-                extra_link_args += ['-lcusparse', '-l', 'cusparse']
+                extra_link_args += ['-lhipsparse', '-l', 'hipsparse']
 
         name = main.split(os.sep)[-1][:-4]
         sources = [main]
