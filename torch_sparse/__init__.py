@@ -11,8 +11,7 @@ for library in [
         '_version', '_convert', '_diag', '_spmm', '_spspmm', '_metis', '_rw',
         '_saint', '_sample', '_ego_sample', '_hgt_sample', '_relabel'
 ]:
-    torch.ops.load_library(importlib.machinery.PathFinder().find_spec(
-        f'{library}_{suffix}', [osp.dirname(__file__)]).origin)
+    torch.ops.load_library(importlib.machinery.PathFinder().find_spec(f'{library}_{suffix}', [osp.dirname(__file__)]).origin)
 
 if torch.cuda.is_available():  # pragma: no cover
     cuda_version = torch.ops.torch_sparse.cuda_version()
@@ -23,6 +22,7 @@ if torch.cuda.is_available():  # pragma: no cover
         major, minor = int(str(cuda_version)[0]), int(str(cuda_version)[2])
     else:
         major, minor = int(str(cuda_version)[0:2]), int(str(cuda_version)[3])
+    """
     t_major, t_minor = [int(x) for x in torch.version.cuda.split('.')]
 
     if t_major != major:
@@ -32,6 +32,7 @@ if torch.cuda.is_available():  # pragma: no cover
             f'{t_major}.{t_minor} and torch_sparse has CUDA version '
             f'{major}.{minor}. Please reinstall the torch_sparse that '
             f'matches your PyTorch install.')
+    """
 
 from .storage import SparseStorage  # noqa
 from .tensor import SparseTensor  # noqa
