@@ -68,7 +68,7 @@ def get_extensions():
             if sys.platform == 'win32':
                 extra_link_args += ['cusparse.lib']
             else:
-                extra_link_args += ['-lhipsparse', '-l', 'hipsparse']
+                extra_link_args += ['-lhipsparse', '-fopenmp']
 
         name = main.split(os.sep)[-1][:-4]
         sources = [main]
